@@ -1,0 +1,19 @@
+{
+  "name": "forkify_v1",
+  "version": "1.0.0",
+  "description": "forkify project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomkent321/recipe-finder.git"
+  },
+  "author": "Thomas Hurd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomkent321/recipe-finder/issues"
+  },
+  "homepage": "https://github.com/tomkent321/recipe-finder#readme"
+}
