@@ -19,7 +19,8 @@ const ctrlSearch = async () => {
     state.search = new Search(query);
 
     //3 prepare UI for results
-
+    searchView.clearInput();
+    searchView.clearResults();
     //4 search for recipies
 
     await state.search.getResults();
