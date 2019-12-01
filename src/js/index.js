@@ -1,5 +1,5 @@
 import Search from './models/Search';
-import { DE } from './views/base';
+import { DE, renderSpinner, clearSpinner } from './views/base';
 import * as searchView from './views/searchView';
 
 //Global state of app
@@ -21,10 +21,11 @@ const ctrlSearch = async () => {
     //3 prepare UI for results
     searchView.clearInput();
     searchView.clearResults();
+    renderSpinner(DE.searchResList);
     //4 search for recipies
 
     await state.search.getResults();
-
+    clearSpinner();
     // 5 render results on UI
 
     searchView.renderResults(state.search.result);
