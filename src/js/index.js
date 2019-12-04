@@ -37,4 +37,18 @@ DE.searchForm.submit(e => {
   ctrlSearch();
 });
 
+DE.searchResPages.click(e => {
+  const btn = e.target.closest('.btn-inline');
+  if (btn) {
+    searchView.clearResults();
+    const goToPage = parseInt(btn.dataset.goto);
+    searchView.renderResults(state.search.result, goToPage);
+  }
+});
+
+// const ctrlDeleteItem = e => {
+//   let itemId, splitID, type, ID;
+
+//   itemId = e.target.parentNode.parentNode.parentNode.parentNode.id
+
 // search.getResults();

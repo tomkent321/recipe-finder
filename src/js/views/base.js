@@ -3,7 +3,8 @@ export const DE = {
   searchForm: $('.search'),
   searchInput: $('.search__field'),
   searchResList: $('.results__list'),
-  searchResMain: $('.results')
+  searchResMain: $('.results'),
+  searchResPages: $('.results__pages')
 };
 
 export const DS = {
