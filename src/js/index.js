@@ -1,4 +1,5 @@
 import Search from './models/Search';
+import Recipe from './models/Recipe';
 import { DE, renderSpinner, clearSpinner } from './views/base';
 import * as searchView from './views/searchView';
 
@@ -9,6 +10,8 @@ import * as searchView from './views/searchView';
 // - Liked recipies
 
 const state = {};
+
+// Search Controller **
 
 const ctrlSearch = async () => {
   // 1 get query from view
@@ -46,9 +49,33 @@ DE.searchResPages.click(e => {
   }
 });
 
-// const ctrlDeleteItem = e => {
-//   let itemId, splitID, type, ID;
+// Recipe Controller ***
 
-//   itemId = e.target.parentNode.parentNode.parentNode.parentNode.id
+// const r = new Recipe(46956);
+// r.getRecipe(r);
+// console.log('r', r);
+const ctrlRecipe = async () => {
+  // get id from url
+  const id = window.location.hash.replace('#', '');
+  if (id) {
+    // prepare UI for changes
 
-// search.getResults();
+    // create new recipe object
+
+    state.recipe = new Recipe(id);
+
+    // get recipe data
+
+    await state.recipe.getRecipe();
+
+    // call calcTime and calcServings
+
+    state.recipe.calcTime();
+    state.recipe.calcServings();
+    // render recipe
+
+    console.log(state);
+  }
+};
+
+$(window).bind('hashchange', ctrlRecipe);
