@@ -4,7 +4,8 @@ export const DE = {
   searchInput: $('.search__field'),
   searchResList: $('.results__list'),
   searchResMain: $('.results'),
-  searchResPages: $('.results__pages')
+  searchResPages: $('.results__pages'),
+  recipeMain: $('.recipe')
 };
 
 export const DS = {

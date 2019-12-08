@@ -11,6 +11,16 @@ export const clearResults = () => {
   DE.searchResPages.empty();
 };
 
+export const highlightSelected = id => {
+  const selected = e.target.closest('.results__list');
+};
+
+// if (btn) {
+//   searchView.clearResults();
+//   const goToPage = parseInt(btn.dataset.goto);
+//   searchView.renderResults(state.search.result, goToPage);
+// }
+
 // const limitRecTitle = (title, limit = 2) => {
 //   const truncTitle = title
 //     .split(' ')
