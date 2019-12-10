@@ -79,9 +79,6 @@ export const renderRecipe = recipe => {
       <ul class="recipe__ingredient-list">
 
       ${recipe.ingredients.map(el => createIngredient(el)).join('')}
-
-          
-
           
       </ul>
 
@@ -111,4 +108,15 @@ export const renderRecipe = recipe => {
     </div>
   `;
   DE.recipeMain.append(recipeMarkUp);
+};
+
+export const updateServingsIngredients = recipe => {
+  // update servings
+  $('.recipe__info-data--people').text(recipe.servings);
+
+  // update ingredients
+  const countElements = Array.from($('.recipe__count'));
+  countElements.forEach((el, i) => {
+    el.textContent = formatCount(recipe.ingredients[i].count);
+  });
 };

@@ -5,7 +5,8 @@ export const DE = {
   searchResList: $('.results__list'),
   searchResMain: $('.results'),
   searchResPages: $('.results__pages'),
-  recipeMain: $('.recipe')
+  recipeMain: $('.recipe'),
+  shopList: $('.shopping__list')
 };
 
 export const DS = {
