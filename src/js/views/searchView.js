@@ -12,7 +12,13 @@ export const clearResults = () => {
 };
 
 export const highlightSelected = id => {
-  const selected = e.target.closest('.results__list');
+  const resultsArr = Array.from($('.results__link'));
+  resultsArr.forEach(el => {
+    el.classList.remove('results__link--active');
+    // el.removeClass('results__link--active');
+  });
+
+  $(`a[href="#${id}"]`).addClass('results__link--active');
 };
 
 // if (btn) {

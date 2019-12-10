@@ -224,4 +224,20 @@ export default class Recipe {
     });
     this.ingredients = newIngredients;
   }
+  updateServings(type) {
+    // update servings
+    console.log('serv type: ', type);
+    const newServings = type === 'dec' ? this.servings - 1 : this.servings + 1;
+
+    // update ingredients
+
+    // 4 servings:  2 cups
+    // 6 servings:  2 * ( 6 / 4)
+
+    this.ingredients.forEach(ing => {
+      ing.count *= newServings / this.servings;
+    });
+
+    this.servings = newServings;
+  }
 }

@@ -11,7 +11,7 @@ import * as recipeView from './views/recipeView';
 // - Liked recipies
 
 const state = {};
-console.log('state: ',state);
+console.log('state: ', state);
 // Search Controller **
 
 const ctrlSearch = async () => {
@@ -45,7 +45,7 @@ const ctrlSearch = async () => {
 
 DE.searchForm.submit(e => {
   e.preventDefault();
-  
+
   ctrlSearch();
 });
 
@@ -70,8 +70,12 @@ const ctrlRecipe = async () => {
     // prepare UI for changes
     recipeView.clearRecipe();
     renderSpinner(DE.recipeMain);
-    // create new recipe object
 
+    // Highight selection
+
+    if (state.search) searchView.highlightSelected(id);
+
+    // create new recipe object
     state.recipe = new Recipe(id);
 
     //TESTING
@@ -102,3 +106,20 @@ const ctrlRecipe = async () => {
 // $(window).bind('load', ctrlRecipe);
 
 ['hashchange', 'load'].forEach(event => $(window).bind(event, ctrlRecipe));
+
+// handle recipe servings buttons
+// btn-decrease *  selects any child
+
+$(DE.recipeMain).click(e => {
+  console.log('fired handler, e: ', e.target);
+  if (e.target.matches('.btn-decrease, .btn-decrease *')) {
+
+    if (state.recipe.servings > 1) {
+      state.recipe.updateServings('dec');
+    }
+    
+  } else if (e.target.matches('.btn-increase, .btn-increase *')) {
+    state.recipe.updateServings('inc');
+  }
+  console.log(state.recipe);
+});
