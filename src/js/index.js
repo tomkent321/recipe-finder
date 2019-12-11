@@ -107,6 +107,19 @@ const ctrlRecipe = async () => {
   }
 };
 
+///////////// CONTROL: list /////////////
+const ctrlList = () => {
+  console.log('fired ctrlList');
+  // Create a new list if there is none yet
+  if (!state.list) state.list = new List();
+
+  // add each ingredient to the list and UI
+  state.recipe.ingredients.forEach(el => {
+    const item = state.list.addItem(el.count, el.unit, el.ingredient);
+    listView.renderItem(item);
+  });
+};
+
 ///////////// EVENT: change or load in the url /////////
 
 ['hashchange', 'load'].forEach(event => $(window).bind(event, ctrlRecipe));
@@ -122,13 +135,7 @@ $(DE.recipeMain).click(e => {
   } else if (e.target.matches('.btn-increase, .btn-increase *')) {
     state.recipe.updateServings('inc');
     recipeView.updateServingsIngredients(state.recipe);
+  } else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
+    ctrlList();
   }
 });
-
-///////////// List Controller /////////////
-
-window.l = new List();
-state.list = window.l;
-// state.list = new List();
-
-// listView.renderItem("6asdfsa", 1, "cup", "lard");
