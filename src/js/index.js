@@ -1,10 +1,12 @@
 import Search from './models/Search';
 import Recipe from './models/Recipe';
 import List from './models/List';
+import Likes from './models/Likes';
 import { DE, renderSpinner, clearSpinner } from './views/base';
 import * as searchView from './views/searchView';
 import * as recipeView from './views/recipeView';
 import * as listView from './views/listView';
+import * as likesView from './views/likesView';
 
 //Global state of app
 // - Search object
@@ -76,6 +78,7 @@ const ctrlRecipe = async () => {
   // get id from url
   const id = window.location.hash.replace('#', '');
   if (id) {
+    
     // prepare UI for changes
     recipeView.clearRecipe();
     renderSpinner(DE.recipeMain);
@@ -100,8 +103,11 @@ const ctrlRecipe = async () => {
 
       // render recipe
       clearSpinner();
-      recipeView.renderRecipe(state.recipe);
+      recipeView.renderRecipe(
+        state.recipe, 
+        state.likes.isLiked(id));
     } catch (err) {
+      console.log(err);
       alert('Error processing recipe!');
     }
   }
@@ -109,7 +115,6 @@ const ctrlRecipe = async () => {
 
 ///////////// CONTROL: list /////////////
 const ctrlList = () => {
-  console.log('fired ctrlList');
   // Create a new list if there is none yet
   if (!state.list) state.list = new List();
 
@@ -120,14 +125,73 @@ const ctrlList = () => {
   });
 };
 
-///////////// EVENT: change or load in the url /////////
+///////////// CONTROL: likes /////////////
 
+/// test
+state.likes = new Likes();
+
+const ctrlLike = () => {
+  // Create a new likes list if there is none yet
+  if (!state.likes) state.likes = new Likes();
+  const currentId = state.recipe.id;
+
+  // user has not liked current recipe
+  if (!state.likes.isLiked(currentId)) {
+    // add to like list
+    const newLike = state.likes.addLike(
+      currentId,
+      state.recipe.title,
+      state.recipe.author,
+      state.recipe.img
+    );
+    // toggle liked button
+    likesView.toggleLikeBtn(true);
+
+    // add to the UI list
+    console.log(state.likes);
+
+    //user has liked recipe
+  } else {
+    // remove from state.likes
+    state.likes.deleteLike(currentId);
+
+    // toggle liked button
+    likesView.toggleLikeBtn(false);
+
+    //remove like from like list
+    console.log(state.likes);
+  }
+};
+
+///////////// EVENT: delete and update shipping list items /////////
+$(DE.shopList).click(e => {
+  //note: the html label for a dataset will be changed to all lowercase no matter how it is written in the code
+  const id = e.target.closest('.shopping__item').dataset.itemid;
+
+  if (e.target.matches('.shopping__delete, .shopping__delete *')) {
+    // delete from state
+    state.list.deleteItem(id);
+
+    // delete from UI
+    listView.deleteItem(id);
+  } else if (e.target.matches('.shopping__count-value')) {
+    const val = parseInt(e.target.value, 10);
+    if (val > 0) {
+      state.list.updateCount(id, val);
+    } else {
+      state.list.updateCount(id, 0);
+    }
+  }
+});
+
+///////////// EVENT: change or load in the url /////////
 ['hashchange', 'load'].forEach(event => $(window).bind(event, ctrlRecipe));
 
-///////////// EVENT: increase or decrease servings buttons ///////
+///////////// EVENT: main receipe events: increase or decrease servings buttons, add to shopping list button, add to likes button ///////
 $(DE.recipeMain).click(e => {
+  // btn-decrease *  selects any child
+  console.log(e.target);
   if (e.target.matches('.btn-decrease, .btn-decrease *')) {
-    // btn-decrease *  selects any child
     if (state.recipe.servings > 1) {
       state.recipe.updateServings('dec');
       recipeView.updateServingsIngredients(state.recipe);
@@ -136,6 +200,10 @@ $(DE.recipeMain).click(e => {
     state.recipe.updateServings('inc');
     recipeView.updateServingsIngredients(state.recipe);
   } else if (e.target.matches('.recipe__btn--add, .recipe__btn--add *')) {
+    //add ingredients to shopping list
     ctrlList();
+  } else if (e.target.matches('.recipe__love, .recipe__love *')) {
+    // likes controller
+    ctrlLike();
   }
 });

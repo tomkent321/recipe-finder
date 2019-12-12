@@ -7,6 +7,7 @@ export const DE = {
   searchResPages: $('.results__pages'),
   recipeMain: $('.recipe'),
   shopList: $('.shopping__list')
+  
 };
 
 export const DS = {

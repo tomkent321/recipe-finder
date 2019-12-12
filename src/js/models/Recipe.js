@@ -18,7 +18,7 @@ export default class Recipe {
       console.log(error);
       alert('Something went wrong');
     }
-  }
+  }         
 
   // assumes 15 minutes cooking time for each 3 ingredients
   calcTime() {
