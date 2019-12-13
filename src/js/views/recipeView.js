@@ -7,6 +7,7 @@ export const clearRecipe = () => {
 };
 
 const formatCount = num => {
+  num = Math.round(num * 10) / 10;
   if (num < 1) {
     return `${new Fraction(num).numerator}/${new Fraction(num).denominator}`;
   } else if (num - parseInt(num) > 0) {

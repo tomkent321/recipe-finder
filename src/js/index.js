@@ -8,22 +8,17 @@ import * as recipeView from './views/recipeView';
 import * as listView from './views/listView';
 import * as likesView from './views/likesView';
 
-//Global state of app
-// - Search object
-// - Current recipe object
-// - Shopping list object
-// - Liked recipies
+
 
 ///////////// STATE /////////////
+// search object
+// recipe object
+// like object
 const state = {};
-
-//TESTING
-window.r = state;
 
 ///////////// CONTROL:  search  CALLS searchView methods /////////////
 const ctrlSearch = async () => {
   // 1 get query from view
-
   const query = searchView.getInput();
 
   if (query) {
@@ -56,13 +51,6 @@ DE.searchForm.submit(e => {
 
 ///////////// EVENT: clicking the 'next' or 'previous' button at bottom of results panel /////////
 DE.searchResPages.click(e => {
-  /* HTML referenced: 
-        <button class="btn-inline results__btn--next" data-goto="2">
-                <span>Page 2</span>
-                <svg class="search__icon">
-                      <use href="img/icons.svg#icon-triangle-right"></use>
-                </svg>
-        </button>  */
 
   const btn = e.target.closest('.btn-inline'); // closest will take any click including span and svg classes
 
@@ -89,8 +77,6 @@ const ctrlRecipe = async () => {
     // create new recipe object
     state.recipe = new Recipe(id);
 
-    //TESTING
-    // window.r = state;
     try {
       // get recipe data and parse Ingredients
 
