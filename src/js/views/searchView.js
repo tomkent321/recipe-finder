@@ -17,11 +17,11 @@ export const highlightSelected = id => {
     el.classList.remove('results__link--active');
   });
 
-  $(`a[href="#${id}"]`).addClass('results__link--active');
+  $(`.results__link[href="#${id}"]`).addClass('results__link--active');
 };
 
 
-const limitRecTitle = (title, limit = 17) => {
+export const limitRecTitle = (title, limit = 17) => {
   const newTitle = [];
   if (title.length > limit) {
     title.split(' ').reduce((acc, cur) => {

@@ -78,7 +78,6 @@ const ctrlRecipe = async () => {
   // get id from url
   const id = window.location.hash.replace('#', '');
   if (id) {
-    
     // prepare UI for changes
     recipeView.clearRecipe();
     renderSpinner(DE.recipeMain);
@@ -103,9 +102,7 @@ const ctrlRecipe = async () => {
 
       // render recipe
       clearSpinner();
-      recipeView.renderRecipe(
-        state.recipe, 
-        state.likes.isLiked(id));
+      recipeView.renderRecipe(state.recipe, state.likes.isLiked(id));
     } catch (err) {
       console.log(err);
       alert('Error processing recipe!');
@@ -128,7 +125,6 @@ const ctrlList = () => {
 ///////////// CONTROL: likes /////////////
 
 /// test
-state.likes = new Likes();
 
 const ctrlLike = () => {
   // Create a new likes list if there is none yet
@@ -148,7 +144,7 @@ const ctrlLike = () => {
     likesView.toggleLikeBtn(true);
 
     // add to the UI list
-    console.log(state.likes);
+    likesView.renderLike(newLike);
 
     //user has liked recipe
   } else {
@@ -159,11 +155,29 @@ const ctrlLike = () => {
     likesView.toggleLikeBtn(false);
 
     //remove like from like list
-    console.log(state.likes);
+    likesView.deleteLike(currentId);
   }
+  likesView.toggleLikeMenu(state.likes.getNumLikes());
 };
 
-///////////// EVENT: delete and update shipping list items /////////
+///////////// EVENT: window load, read likes from local Storage /////////
+
+$(window).on('load', () => {
+  state.likes = new Likes();
+
+  //Restore likes
+  state.likes.readStorage();
+
+  //Toggle like menu button
+  likesView.toggleLikeMenu(state.likes.getNumLikes());
+
+  //Render the existing likes
+  state.likes.likes.forEach(like => likesView.renderLike(like));
+});
+
+
+
+///////////// EVENT: delete and update shopping list items /////////
 $(DE.shopList).click(e => {
   //note: the html label for a dataset will be changed to all lowercase no matter how it is written in the code
   const id = e.target.closest('.shopping__item').dataset.itemid;
@@ -190,7 +204,6 @@ $(DE.shopList).click(e => {
 ///////////// EVENT: main receipe events: increase or decrease servings buttons, add to shopping list button, add to likes button ///////
 $(DE.recipeMain).click(e => {
   // btn-decrease *  selects any child
-  console.log(e.target);
   if (e.target.matches('.btn-decrease, .btn-decrease *')) {
     if (state.recipe.servings > 1) {
       state.recipe.updateServings('dec');

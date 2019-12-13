@@ -18,6 +18,6 @@ export const renderItem = item => {
 };
 
 export const deleteItem = id => {
-  console.log('del id: ', id);
+  // console.log('del id: ', id);
   const item = $(`[data-itemId="${id}"]`).remove();
 };

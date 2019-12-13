@@ -6,8 +6,10 @@ export const DE = {
   searchResMain: $('.results'),
   searchResPages: $('.results__pages'),
   recipeMain: $('.recipe'),
-  shopList: $('.shopping__list')
-  
+  shopList: $('.shopping__list'),
+  likesMenu: $('.likes__field'),
+  likesList: $('.likes__list')
+  // likesMenuH: document.querySelector('.likes__field')
 };
 
 export const DS = {
